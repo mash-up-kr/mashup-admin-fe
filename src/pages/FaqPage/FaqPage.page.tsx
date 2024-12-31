@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { OutputData } from '@editorjs/editorjs';
 import { Editor, EditorAside } from '@/components';
 import * as Styled from './FaqPage.styled';
-import { $teams, $profile } from '@/store';
+import { $teams, $profile, $isMaster } from '@/store';
 import { SelectSize } from '@/components/common/Select/Select.component';
 import {
   decodeHTMLEntities,
@@ -28,22 +28,26 @@ const FaqPage = () => {
 
   const { handleAddToast } = useToast();
   const teams = useRecoilValue($teams);
-  const teamOptions = teams.map(({ teamId, name }) => ({
-    value: teamId.toString(),
-    label: name,
-  }));
+  const teamOptions = useMemo(() => {
+    return teams.map(({ name }) => ({
+      value: name.toLowerCase(),
+      label: name,
+    }));
+  }, [teams]);
 
   const myTeamName = useRecoilValue($profile)[0];
+  const isMaster = useRecoilValue($isMaster);
   const isStaffUser = myTeamName === Team.mashUp || myTeamName === Team.branding;
 
-  const getTeamSelectOptions = () => {
+  const teamSelectOptions = useMemo(() => {
+    if (isMaster) {
+      return [commonSelectOption, ...teamOptions];
+    }
     const myTeamOptionObject = teamOptions.find(
       ({ label }) => label.toUpperCase() === myTeamName.toUpperCase(),
     );
     return [myTeamOptionObject ?? commonSelectOption];
-  };
-
-  const teamSelectOptions = getTeamSelectOptions();
+  }, [teamOptions, myTeamName, isMaster]);
 
   const handleUpdateButtonClick = async () => {
     const originalOutputData = getLocalStorageData(EDITOR_ID);
@@ -84,13 +88,8 @@ const FaqPage = () => {
   };
 
   useEffect(() => {
-    const myTeamSelectOptions = teamSelectOptions[0] ?? commonSelectOption;
-
-    if (myTeamSelectOptions.value === commonSelectOption.value) {
-      setSelectedPlatform(commonSelectOption.value);
-    } else {
-      setSelectedPlatform(myTeamSelectOptions.label.toLowerCase());
-    }
+    const myTeamSelectOption = teamSelectOptions[0] ?? commonSelectOption;
+    setSelectedPlatform(myTeamSelectOption.value);
   }, [teamSelectOptions]);
 
   useEffect(() => {
@@ -126,6 +125,9 @@ const FaqPage = () => {
               defaultValue={teamSelectOptions[0]}
               size={SelectSize.sm}
               options={teamSelectOptions}
+              onChangeOption={(option) => {
+                setSelectedPlatform(option.value);
+              }}
             />
           }
           rightActionButton={{

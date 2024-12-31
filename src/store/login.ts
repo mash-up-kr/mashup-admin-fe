@@ -1,8 +1,7 @@
 import { atom } from 'recoil';
-import { LoginResponse, MemberPositionType } from '@/types/dto';
+import { LoginResponse, MemberPosition, MemberPositionType } from '@/types/dto';
 import { TeamType, RoleType } from '@/components/common/UserProfile/UserProfile.component';
 import { selectorWithRefresher } from './recoil';
-import { ScoreType } from '@/components/ActivityScore';
 
 export const $me = atom<LoginResponse>({
   key: 'me',
@@ -38,7 +37,12 @@ export const $profile = selectorWithRefresher<[string, string, MemberPositionTyp
   },
 });
 
-const MASTER_SCORE_TYPES = [ScoreType.MASHUP_LEADER, ScoreType.MASHUP_SUBLEADER] as string[];
+const MASTER_SCORE_TYPES = [
+  MemberPosition.mashupLeader,
+  MemberPosition.mashupSubLeader,
+  MemberPosition.brandingLeader,
+  MemberPosition.brandingSubLeader,
+] as string[];
 
 export const $isMaster = selectorWithRefresher<boolean>({
   key: 'isMaster',

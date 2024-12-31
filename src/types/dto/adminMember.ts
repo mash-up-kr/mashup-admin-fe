@@ -5,7 +5,8 @@ export const MemberPosition = {
   mashupSubLeader: 'MASHUP_SUBLEADER',
   brandingLeader: 'BRANDING_LEADER',
   brandingSubLeader: 'BRANDING_SUBLEADER',
-  brandingMember: 'BRANDING_MEMBER',
+  brandingHelper: 'BRANDING_HELPER',
+  brandingMember: 'BRANDING_MEMBER', // deprecated
   springLeader: 'SPRING_LEADER',
   springSubLeader: 'SPRING_SUBLEADER',
   springHelper: 'SPRING_HELPER',
