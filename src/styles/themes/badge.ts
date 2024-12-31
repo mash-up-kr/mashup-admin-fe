@@ -1,12 +1,12 @@
-import { css } from '@emotion/react';
+import { css, SerializedStyles } from '@emotion/react';
 import {
   ApplicationResultStatus,
   ApplicationConfirmationStatus,
 } from '@/components/common/ApplicationStatusBadge/ApplicationStatusBadge.component';
 import { colors } from '.';
-import { EmailStatus } from '@/types';
+import { EmailStatus, MemberStatus } from '@/types';
 
-export const badge = {
+export const badge: { [key: string]: SerializedStyles } = {
   [ApplicationResultStatus.NOT_RATED]: css`
     color: ${colors.gray60};
     background-color: ${colors.gray20};
@@ -82,6 +82,18 @@ export const badge = {
   [EmailStatus.SUCCESS]: css`
     color: ${colors.blue70};
     border: 0.1rem solid ${colors.blue70};
+  `,
+  [MemberStatus.ACTIVE]: css`
+    color: ${colors.blue70};
+    background-color: ${colors.blue20};
+  `,
+  [MemberStatus.DROP_OUT]: css`
+    color: ${colors.white};
+    background-color: ${colors.red100};
+  `,
+  [MemberStatus.TRANSFER]: css`
+    color: ${colors.purple70};
+    background-color: ${colors.purple20};
   `,
 } as const;
 

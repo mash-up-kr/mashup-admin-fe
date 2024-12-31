@@ -13,6 +13,7 @@ import {
   CreateQRCodeModalDialog,
   DisplayQRCodeModalDialog,
   CreateHelperAdminMemberDialog,
+  ChangeMemberStatusDialog,
 } from '@/components';
 import { AlertModalDialogProps } from '../AlertModalDialog/AlertModalDialog.component';
 import { ChangeResultModalDialogProps } from '@/components/modal/ChangeResultModalDialog/ChangeResultModalDialog.component';
@@ -24,6 +25,7 @@ import { ActivityScoreModalDialogProps } from '@/components/modal/ActivityScoreM
 import { CreateQRCodeModalDialogProps } from '@/components/modal/CreateQRCodeModalDialog/CreateQRCodeModalDialog.component';
 import { DisplayQRCodeModalDialogProps } from '@/components/modal/DisplayQRCodeModalDialog/DisplayQRCodeModalDialog.component';
 import { CreateHelperAdminMemberDialogProps } from '@/components/modal/CreateHelperAdminMemberDialog/CreateHelperAdminMemberDialog.component';
+import { ChangeMemberStatusDialogProps } from '@/components/modal/ChangeMemberStatusDialog/ChangeMemberStatusDialog.component';
 
 const Modal = ({ modalKey }: { modalKey: ModalKeyType }) => {
   const modal = useRecoilValue($modalByStorage(modalKey));
@@ -98,6 +100,15 @@ const Modal = ({ modalKey }: { modalKey: ModalKeyType }) => {
       <CreateHelperAdminMemberDialog
         key={modalKey}
         {...(modal.props as CreateHelperAdminMemberDialogProps)}
+      />
+    );
+  }
+
+  if (modalKey === ModalKey.changeMemberStatusDialog && modal.isOpen && modal.props) {
+    return (
+      <ChangeMemberStatusDialog
+        key={modalKey}
+        {...(modal.props as ChangeMemberStatusDialogProps)}
       />
     );
   }

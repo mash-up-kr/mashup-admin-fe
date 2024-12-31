@@ -1,3 +1,12 @@
+export const MemberStatus = {
+  ACTIVE: 'ACTIVE',
+  DROP_OUT: 'DROP_OUT',
+  END: 'END',
+  TRANSFER: 'TRANSFER',
+} as const;
+
+export type MemberStatusKeys = keyof typeof MemberStatus;
+
 export interface MemberRequest {
   generationNumber?: number;
   page?: number;
@@ -17,6 +26,7 @@ export interface MemberResponse {
   platform: string;
   score: number;
   identification: string;
+  memberStatus: MemberStatusKeys;
 }
 
 export interface MemberByIdResponseData {

@@ -6,3 +6,4 @@ export { default as ActivityScoreModalDialog } from './ActivityScoreModalDialog/
 export { default as CreateQRCodeModalDialog } from './CreateQRCodeModalDialog/CreateQRCodeModalDialog.component';
 export { default as DisplayQRCodeModalDialog } from './DisplayQRCodeModalDialog/DisplayQRCodeModalDialog.component';
 export { default as CreateHelperAdminMemberDialog } from './CreateHelperAdminMemberDialog/CreateHelperAdminMemberDialog.component';
+export { default as ChangeMemberStatusDialog } from './ChangeMemberStatusDialog/ChangeMemberStatusDialog.component';
